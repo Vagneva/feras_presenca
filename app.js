@@ -1,25 +1,18 @@
-﻿
-
-import { initializeApp } from "https://gstatic.com";
+﻿import { initializeApp } from "https://gstatic.com";
 import { getFirestore, collection, addDoc, getDocs } from "https://gstatic.com";
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+// Configurações oficiais do seu projeto Feras Taekwondo 🥋
 const firebaseConfig = {
-  apiKey: "AIzaSyD6hW-h6KXVisz31RRcq4mMZWMoW3bgAKk",
-  authDomain: "feras-taekwondo.firebaseapp.com",
-  projectId: "feras-taekwondo",
-  storageBucket: "feras-taekwondo.firebasestorage.app",
-  messagingSenderId: "455229820465",
-  appId: "1:455229820465:web:86ff24d82efb7b842c0f10"
+    apiKey: "AIzaSyD6hW-h6kXVisz31RRcq4mWZMOWw3bgAkk",
+    authDomain: "://firebaseapp.com",
+    projectId: "feras-taekwondo",
+    storageBucket: "feras-taekwondo.firebasestorage.app",
+    messagingSenderId: "455229820465",
+    appId: "1:455229820465:web:86ff24d82efb7b42c0f10"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const video = document.getElementById('webcam');
 const statusTxt = document.getElementById('status');
@@ -45,7 +38,7 @@ async function iniciarSistema() {
         statusTxt.innerText = "🥋 Feras Taekwondo operacional!";
     } catch (err) {
         console.error(err);
-        statusTxt.innerText = "Erro ao acessar câmera ou carregar IA.";
+        statusTxt.innerText = "Erro ao acessar câmera. Verifique as permissões do navegador.";
     }
 }
 
@@ -107,7 +100,7 @@ async function baterPresenca() {
     try {
         const snapshot = await getDocs(collection(db, "feras_alunos"));
         let correspondencia = null;
-        let menorDistancia = 0.55; // Limite padrão de precisão
+        let menorDistancia = 0.55;
 
         snapshot.forEach((doc) => {
             const dados = doc.data();
@@ -139,7 +132,6 @@ async function baterPresenca() {
     }
 }
 
-// Verifica data de aniversário e ativa efeitos especiais visuais
 function parabenizarSeAniversario(dataNascimento, nome) {
     const hoje = new Date();
     const nasc = new Date(dataNascimento);
@@ -147,21 +139,20 @@ function parabenizarSeAniversario(dataNascimento, nome) {
     if (hoje.getDate() === nasc.getUTCDate() && hoje.getMonth() === nasc.getUTCMonth()) {
         statusTxt.innerText = `🎉 PARABÉNS, ${nome.toUpperCase()}! 🎉`;
         
-        // Efeito cascata de confetes laterais
-        let fim = Date.now() + (4 * 1000);
-        (function dispararLet() {
-            confetti({ particleCount: 6, angle: 60, spread: 50, origin: { x: 0 } });
-            confetti({ particleCount: 6, angle: 120, spread: 50, origin: { x: 1 } });
-            if (Date.now() < fim) { requestAnimationFrame(dispararLet); }
-        }());
+        if (typeof confetti === 'function') {
+            let fim = Date.now() + (4 * 1000);
+            (function dispararLet() {
+                confetti({ particleCount: 6, angle: 60, spread: 50, origin: { x: 0 } });
+                confetti({ particleCount: 6, angle: 120, spread: 50, origin: { x: 1 } });
+                if (Date.now() < fim) { requestAnimationFrame(dispararLet); }
+            }());
+        }
         
         alert(`🎂 Parabéns, ${nome}! Feliz Aniversário da equipe Feras Taekwondo! 🥳🥋`);
     }
 }
 
-// Vincula as funções JavaScript aos cliques dos botões na tela
 document.getElementById('btnMatricular').addEventListener('click', cadastrarAtleta);
 document.getElementById('btnVerificar').addEventListener('click', baterPresenca);
 
-// Inicializa a IA ao abrir o sistema
 iniciarSistema();
