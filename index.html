@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feras Taekwondo 🥋 - Presença Facial</title>
+    <!-- Importações das bibliotecas de IA e Confete -->
+    <script defer src="https://jsdelivr.net"></script>
+    <script src="https://jsdelivr.net"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>FERAS TAEKWONDO 🥋</h1>
+    <p>Painel de Reconhecimento Facial Independente</p>
+
+    <div class="container">
+        <!-- Abas de Navegação -->
+        <div class="abas">
+            <button id="abaPresencaBtn" class="aba-btn ativa" onclick="mudarAba('presenca')">Chamada</button>
+            <button id="abaMatriculaBtn" class="aba-btn" onclick="mudarAba('matricula')">Nova Matrícula</button>
+        </div>
+
+        <!-- Alertas do Sistema -->
+        <p id="status">Carregando Inteligência Artificial... Aguarde.</p>
+        
+        <!-- Vídeo da Câmera -->
+        <div class="video-container">
+            <video id="webcam" autoplay muted playsinline></video>
+        </div>
+
+        <!-- Seção: Marcar Presença -->
+        <div id="areaPresenca">
+            <h3>Posicione o rosto para registrar a presença</h3>
+            <button id="btnVerificar" class="btn-acao">Escanear Rosto</button>
+        </div>
+
+        <!-- Seção: Fazer Matrícula -->
+        <div id="areaMatricula" style="display: none;">
+            <h3>Cadastro de Aluno Novo</h3>
+            <div class="form-group">
+                <label>Nome Completo:</label>
+                <input type="text" id="nomeAluno" placeholder="Nome do atleta">
+            </div>
+            <div class="form-group">
+                <label>Data de Nascimento:</label>
+                <input type="date" id="dataNascimento">
+            </div>
+            <button id="btnMatricular" class="btn-acao">Salvar Biometria Facial</button>
+        </div>
+    </div>
+
+    <!-- Script de controle visual das abas -->
+    <script>
+        function mudarAba(tipo) {
+            const presencaArea = document.getElementById('areaPresenca');
+            const matriculaArea = document.getElementById('areaMatricula');
+            const btnP = document.getElementById('abaPresencaBtn');
+            const btnM = document.getElementById('abaMatriculaBtn');
+
+            if(tipo === 'presenca') {
+                presencaArea.style.display = 'block';
+                matriculaArea.style.display = 'none';
+                btnP.classList.add('ativa');
+                btnM.classList.remove('ativa');
+            } else {
+                presencaArea.style.display = 'none';
+                matriculaArea.style.display = 'block';
+                btnP.classList.remove('ativa');
+                btnM.classList.add('ativa');
+            }
+        }
+    </script>
+
+    <!-- Script principal de lógica do Firebase e IA -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
