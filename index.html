@@ -1,12 +1,17 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feras Taekwondo 🥋 - Presença Facial</title>
-    <!-- Importações das bibliotecas de IA e Confete -->
+    <!-- Bibliotecas Necessárias carregadas de forma direta -->
     <script defer src="https://jsdelivr.net"></script>
     <script src="https://jsdelivr.net"></script>
+    
+    <!-- Carregamento do Firebase Compatível (Evita erros de CORS no GitHub) -->
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,27 +20,22 @@
     <p>Painel de Reconhecimento Facial Independente</p>
 
     <div class="container">
-        <!-- Abas de Navegação -->
         <div class="abas">
             <button id="abaPresencaBtn" class="aba-btn ativa" onclick="mudarAba('presenca')">Chamada</button>
             <button id="abaMatriculaBtn" class="aba-btn" onclick="mudarAba('matricula')">Nova Matrícula</button>
         </div>
 
-        <!-- Alertas do Sistema -->
         <p id="status">Carregando Inteligência Artificial... Aguarde.</p>
         
-        <!-- Vídeo da Câmera -->
         <div class="video-container">
             <video id="webcam" autoplay muted playsinline></video>
         </div>
 
-        <!-- Seção: Marcar Presença -->
         <div id="areaPresenca">
             <h3>Posicione o rosto para registrar a presença</h3>
             <button id="btnVerificar" class="btn-acao">Escanear Rosto</button>
         </div>
 
-        <!-- Seção: Fazer Matrícula -->
         <div id="areaMatricula" style="display: none;">
             <h3>Cadastro de Aluno Novo</h3>
             <div class="form-group">
@@ -50,7 +50,6 @@
         </div>
     </div>
 
-    <!-- Script de controle visual das abas -->
     <script>
         function mudarAba(tipo) {
             const presencaArea = document.getElementById('areaPresenca');
@@ -71,8 +70,6 @@
             }
         }
     </script>
-
-    <!-- Script principal de lógica do Firebase e IA -->
-    <script type="module" src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
