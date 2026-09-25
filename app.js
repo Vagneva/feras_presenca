@@ -1,6 +1,3 @@
-﻿import { initializeApp } from "https://gstatic.com";
-import { getFirestore, collection, addDoc, getDocs } from "https://gstatic.com";
-
 // Configurações oficiais do seu projeto Feras Taekwondo 🥋
 const firebaseConfig = {
     apiKey: "AIzaSyD6hW-h6kXVisz31RRcq4mWZMOWw3bgAkk",
@@ -11,14 +8,14 @@ const firebaseConfig = {
     appId: "1:455229820465:web:86ff24d82efb7b42c0f10"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Inicialização segura do Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 const video = document.getElementById('webcam');
 const statusTxt = document.getElementById('status');
 let modelosProntos = false;
 
-// Inicializa os arquivos de modelos de IA e a câmera do aparelho
 async function iniciarSistema() {
     try {
         statusTxt.innerText = "Carregando inteligência artificial...";
@@ -38,11 +35,10 @@ async function iniciarSistema() {
         statusTxt.innerText = "🥋 Feras Taekwondo operacional!";
     } catch (err) {
         console.error(err);
-        statusTxt.innerText = "Erro ao acessar câmera. Verifique as permissões do navegador.";
+        statusTxt.innerText = "Erro ao acessar câmera. Dê permissão no seu navegador.";
     }
 }
 
-// Executa o mapeamento e salva o registro numérico do rosto
 async function cadastrarAtleta() {
     const nome = document.getElementById('nomeAluno').value.trim();
     const dataNasc = document.getElementById('dataNascimento').value;
@@ -67,7 +63,7 @@ async function cadastrarAtleta() {
 
     try {
         statusTxt.innerText = "Salvando matrícula única...";
-        await addDoc(collection(db, "feras_alunos"), {
+        await db.collection("feras_alunos").add({
             nomeCompleto: nome,
             dataNascimento: dataNasc,
             faceDescriptor: vetorMatematico,
@@ -83,7 +79,6 @@ async function cadastrarAtleta() {
     }
 }
 
-// Analisa quem está na câmera e salva a presença se reconhecido
 async function baterPresenca() {
     if (!modelosProntos) return;
     statusTxt.innerText = "Buscando identificação facial...";
@@ -98,7 +93,7 @@ async function baterPresenca() {
     }
 
     try {
-        const snapshot = await getDocs(collection(db, "feras_alunos"));
+        const snapshot = await db.collection("feras_alunos").get();
         let correspondencia = null;
         let menorDistancia = 0.55;
 
@@ -114,7 +109,7 @@ async function baterPresenca() {
         });
 
         if (correspondencia) {
-            await addDoc(collection(db, "feras_presencas"), {
+            await db.collection("feras_presencas").add({
                 alunoId: correspondencia.id,
                 nomeAluno: correspondencia.nomeCompleto,
                 dataHora: new Date().toISOString(),
