@@ -1,29 +1,3 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feras Taekwondo 🥋 - Presença Facial</title>
-    <!-- Bibliotecas Necessárias carregadas de forma direta -->
-    <script defer src="https://jsdelivr.net"></script>
-    <script src="https://jsdelivr.net"></script>
-    
-    <!-- Carregamento do Firebase Compatível (Evita erros de CORS no GitHub) -->
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <h1>FERAS TAEKWONDO 🥋</h1>
-    <p>Painel de Reconhecimento Facial Independente</p>
-
-    <div class="container">
-        <div class="abas">
-            <button id="abaPresencaBtn" class="aba-btn ativa" onclick="mudarAba('presenca')">Chamada</button>
-            <button id="abaMatriculaBtn" class="aba-btn" onclick="mudarAba('matricula')">Nova Matrícula</button>
-        </div>
 
         <p id="status">Carregando Inteligência Artificial... Aguarde.</p>
         
@@ -70,6 +44,8 @@
             }
         }
     </script>
-    <script src="app.js"></script>
+
+    <!-- O app.js agora fica no final com o comando defer para esperar o Firebase -->
+    <script defer src="app.js"></script>
 </body>
 </html>
